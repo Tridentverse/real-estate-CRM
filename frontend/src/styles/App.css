@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1602495080095-f0170897da72');  /* Unsplash background image */
+    background-size: cover;
+    background-position: center;
+  }
+  
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-size: cover;
+    height: 100vh;
+  }
+  
+  .login-box {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 80%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  p {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ff4757;
+  }
+  

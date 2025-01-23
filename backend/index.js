@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 const path = require("path")
 
 app.use(express.json());
@@ -16,7 +16,11 @@ const status = require("express-status-monitor")
 const AdminRoute = require("./Routes/AdminRoute");
 const UserRoute = require("./Routes/UserRoute");
 const PropertyRoute = require("./Routes/PropertyRoute");
-const wishlistRoutes = require('./Routes/WishlistRoute');
+const WishlistRoute = require('./Routes/WishlistRoute');
+const EnquiryRoute = require('./Routes/EnquiryRoute');
+const FeedbackRoute = require('./Routes/FeedbackRoute');
+const ReviewRoute = require('./Routes/ReviewRoute');
+
 
 
 
@@ -51,9 +55,13 @@ app.use(cors(corsOptions));
 app.use("/api", AdminRoute);
 app.use("/api", UserRoute);
 app.use("/api", PropertyRoute);
-app.use('/api', wishlistRoutes);
+app.use('/api', WishlistRoute);
+app.use('/api', EnquiryRoute);
+ app.use('/api', FeedbackRoute);
+ app.use('/api', ReviewRoute);
 
 
 server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
+  

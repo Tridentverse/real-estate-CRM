@@ -1,7 +1,6 @@
 const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Promocode = require("../Models/User");
 
 const register = async (req, res) => {
   try {

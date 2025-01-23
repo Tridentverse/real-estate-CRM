@@ -2,21 +2,20 @@ const mongoose = require('mongoose');
 
 const wishlistSchema = new mongoose.Schema({
     userId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     propertyId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Property',
         required: true
     },
-    status: {
-        type: String,
-        required: true
+    addedAt: {
+        type: Date,
+        default: Date.now
     }
 });
-
-// Create a compound unique index on userId and propertyId fields
-wishlistSchema.index({ userId: 1, propertyId: 1 }, { unique: true });
 
 const Wishlist = mongoose.model('Wishlist', wishlistSchema);
 

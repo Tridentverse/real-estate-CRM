@@ -11,9 +11,12 @@ const createReview = async (req, res) => {
   }
 };
 
+
 const getReviewsByProperty = async (req, res) => {
   try {
     const { propertyId } = req.params;
+
+    // Fetch reviews and populate 'userId' with the 'username' field
     const reviews = await Review.find({ propertyId }).populate('userId', 'username');
 
     if (!reviews.length) {
@@ -26,6 +29,9 @@ const getReviewsByProperty = async (req, res) => {
     res.status(500).json({ message: 'Error fetching reviews', error: error.message });
   }
 };
+
+
+
 // Exporting the functions as an object
 module.exports = {
   createReview,

@@ -1,22 +1,41 @@
 const mongoose = require('mongoose');
 
-const propertySchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  description: { type: String },
-  price: { type: Number, required: true },
-  location: { type: String ,required:true},
-  status: { type: String, required: true },
-  wishlist: { type: String, required: true },
-   
+// Property Schema
+const PropertySchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user', // Reference to the User model
+      required: function() {
+        return this.role === 'user'; // userId is required if the role is 'user'
+      }
+    },
+    adminId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin', // Reference to the Admin model
+      required: function() {
+        return this.role === 'admin'; // adminId is required if the role is 'admin'
+      }
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      required: true
+    },
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+    location: { type: String, required: true },
+    status: { type: String, required: true },
+    wishlist: { type: String, required: true },
+    realEstateType: { type: String, required: true },
+    lookingTo: {
+      city: String,
+      society: String,
+      locality: String
+    }
+  },
+  { timestamps: true }
+);
 
-  // New fields
-  realEstateType: { type: String, required: true }, // Example: 'Apartment', 'Villa', etc.
-  lookingTo: { 
-    city: { type: String, required: true }, 
-    society: { type: String, required: true },
-    locality: { type: String, required: true } 
-  }
-});
-
-const Property = mongoose.model('Property', propertySchema);
-module.exports = Property;
+module.exports = mongoose.model('Property', PropertySchema);

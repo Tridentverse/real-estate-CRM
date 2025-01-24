@@ -5,7 +5,9 @@ const {
   getProperty, 
   updateProperty, 
   deleteProperty ,
-  searchProperties
+  searchProperties,
+  getAdminProperties,
+  getUserProperties
 } = require('../Controllers/PropertyController'); // Adjust path as necessary
 const router = express.Router();
 
@@ -24,5 +26,7 @@ router.put('/update/:id', updateProperty);
 // Route to delete a property by ID
 router.delete('/delete/:id', deleteProperty);
 router.get('/search', searchProperties);
+router.get('/admin/properties/:adminId', getAdminProperties);
+router.get('/user/properties/:userId', getUserProperties);
 
 module.exports = router;

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { IoMdSettings } from 'react-icons/io'; // Ensure you have this import
-import { FaAngleDown, FaAngleRight } from 'react-icons/fa'; // Ensure this import too
 
 const Navbar = () => {
-  const [settingDropdown, setSettingDropdown] = useState(false); // State to control dropdown
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar
   
   // Function for handling the logout button
@@ -43,35 +40,16 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Settings dropdown */}
-      <div
-        className="relative"
-        onMouseEnter={() => setSettingDropdown(true)}
-        onMouseLeave={() => setSettingDropdown(false)}
-      >
-        <div className="flex items-center justify-center text-xl font-semibold cursor-pointer">
-          <IoMdSettings className="pr-1 mt-[2px] text-white" />
-          <div className="text-lg text-white">Setting</div>
-          {settingDropdown ? (
-            <FaAngleDown className="text-end text-sm mt-1 mx-4 text-white" />
-          ) : (
-            <FaAngleRight className="text-end text-sm mt-1 mx-4 text-white" />
-          )}
+      <div className="flex items-center ml-auto">
+        {/* Logout Button at the top-right */}
+        <div className="relative ml-4">
+          <button
+            onClick={handleLogout}
+            className="text-white font-semibold px-8 py-2 rounded-full bg-black hover:bg-gray-800"
+          >
+            Logout
+          </button>
         </div>
-
-        {/* Dropdown Content */}
-        {settingDropdown && (
-          <div className="absolute text-white flex items-center shadow-lg bg-gradient-to-r from-[#4c4f6a] to-[#767ca3] rounded-md border-[1px] right-3 p-4 min-w-80">
-            <div className="w-1/3 ml-5">
-              <button
-                onClick={handleLogout}
-                className="flex items-center text-[16px] px-3 py-1 font-medium text-white bg-gray-800 rounded-full hover:scale-110 transform transition-transform duration-200"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </nav>
   );

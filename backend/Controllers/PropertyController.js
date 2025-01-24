@@ -7,32 +7,35 @@ const Admin = require('../Models/Admin'); // Import Admin model
 
 const createProperty = async (req, res) => {
   try {
-    // Extract the necessary data from the request body
+    console.log("Received data:", req.body);  // Log the received request body
+
     const { role, userId, adminId, name, description, price, location, status, wishlist, realEstateType, lookingTo } = req.body;
 
-    // Validate role and required ID (userId for 'user' role or adminId for 'admin' role)
     if (!role) {
-      return res.status(400).json({ message: "Role is required. Please specify either 'user' or 'admin'." });
+      return res.status(400).json({ message: "Role is required" });
+    }
+    if (!wishlist) {
+      return res.status(400).json({ message: "Wishlist is required" });
     }
 
-    if (role === 'user' && !userId) {
-      return res.status(400).json({ message: 'userId is required for user role.' });
+    if (role === "user" && !userId) {
+      return res.status(400).json({ message: "userId is required for user role" });
     }
 
-    if (role === 'admin' && !adminId) {
-      return res.status(400).json({ message: 'adminId is required for admin role.' });
+    if (role === "admin" && !adminId) {
+      return res.status(400).json({ message: "adminId is required for admin role" });
     }
 
-    // Validate lookingTo object
+    // Validate the lookingTo object
     if (!lookingTo || !lookingTo.city || !lookingTo.society || !lookingTo.locality) {
-      return res.status(400).json({ message: 'lookingTo object with city, society, and locality is required.' });
+      return res.status(400).json({ message: "LookingTo must include city, society, and locality" });
     }
 
-    // Prepare the new property data
+    // Create the property
     const newProperty = new Property({
       role,
-      userId: role === 'user' ? userId : null,   // Assign userId if role is 'user'
-      adminId: role === 'admin' ? adminId : null, // Assign adminId if role is 'admin'
+      userId: role === "user" ? userId : null,
+      adminId: role === "admin" ? adminId : null,
       name,
       description,
       price,
@@ -46,14 +49,12 @@ const createProperty = async (req, res) => {
     // Save the property to the database
     await newProperty.save();
 
-    // Respond with success
-    res.status(201).json({ message: 'Property created successfully', property: newProperty });
+    return res.status(201).json({ message: "Property created successfully", property: newProperty });
   } catch (error) {
-    console.error('Error creating property:', error);
-    res.status(500).json({ message: 'Error creating property', error: error.message });
+    console.error("Error creating property:", error.message);  // Log the error message
+    return res.status(500).json({ message: "Error adding the property", error: error.message });
   }
 };
-
 
 
 
@@ -116,22 +117,24 @@ const updateProperty = async (req, res) => {
 };
 
 // DELETE a property by ID
-const deleteProperty = async (req, res) => {
+const deleteProperty = async (id) => {
   try {
-    const { id } = req.params;
-
-    const property = await Property.findByIdAndDelete(id);
-
-    if (!property) {
-      return res.status(404).json({ message: 'Property not found' });
+    // Send DELETE request to the backend API to delete the property by ID
+    const response = await axios.delete(`http://localhost:5000/api/deleteProperty/${id}`);
+    
+    if (response.status === 200) {
+      // If successful, filter the properties array to remove the deleted property
+      setProperties(properties.filter((property) => property._id !== id));
+      alert("Property deleted successfully!");
+    } else {
+      alert("Something went wrong with deleting the property.");
     }
-
-    res.status(200).json({ message: 'Property deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error deleting property' });
+  } catch (err) {
+    console.error("Failed to delete property:", err.message);
+    alert("Error deleting the property.");
   }
 };
+
 
 const searchProperties = async (req, res) => {
   try {

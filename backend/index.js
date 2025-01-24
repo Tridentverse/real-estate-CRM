@@ -6,6 +6,8 @@ const connectDB = require("./config/db");
 const PORT = process.env.PORT || 5000;
 const path = require("path")
 
+app.use(cors());
+
 app.use(express.json());
 
 
@@ -20,7 +22,7 @@ const WishlistRoute = require('./Routes/WishlistRoute');
 const EnquiryRoute = require('./Routes/EnquiryRoute');
 const FeedbackRoute = require('./Routes/FeedbackRoute');
 const ReviewRoute = require('./Routes/ReviewRoute');
-
+const languageRoute = require('./Routes/LanguageRoute');
 
 
 
@@ -59,7 +61,7 @@ app.use('/api', WishlistRoute);
 app.use('/api', EnquiryRoute);
  app.use('/api', FeedbackRoute);
  app.use('/api', ReviewRoute);
-
+ app.use('/api', languageRoute);
 
 server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
